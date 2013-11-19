@@ -1,0 +1,48 @@
+<modification>
+	<id>VQMOD CORE FOR PAYZIPPY</id>
+	<version>1.5.5.1</version>
+	<vqmver>2.1.7</vqmver>
+	<author>hieuht</author>
+	<!-- Front End -->
+	
+	
+        <file name="catalog/controller/common/seo_url.php">
+		<operation error="skip">
+			<search position="after" offset="1"><![CDATA[
+                        $this->request->get['information_id'] = $url[1];
+                        ]]></search>
+			<add><![CDATA[
+                            if ($url[0] == 'callback') {
+                                    $this->request->get['callback'] = $url[1];
+                            }	
+			]]></add>
+		</operation>
+                <operation error="skip">
+			<search position="after" offset="2"><![CDATA[
+                        $this->request->get['route'] = 'information/information';
+                        ]]></search>
+			<add><![CDATA[
+                        elseif (isset($this->request->get['callback'])) {
+                            $this->request->get['route'] = 'payment/payzippy/callback';
+                        }
+			]]></add>
+		</operation>
+        <operation error="skip">
+			<search position="after" offset="12"><![CDATA[
+                        } elseif ($key == 'path') {
+                        ]]></search>
+			<add><![CDATA[
+                        else if ($data['route'] == 'payment/payzippy/callback' && $key == 'callback') { 
+						$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "url_alias WHERE `query` = '" . $this->db->escape($key . '=' . (int)$value) . "'");
+					
+						if ($query->num_rows) {
+							$url .= '/' . $query->row['keyword'];
+							
+							unset($data[$key]);
+						}					
+					}
+			]]></add>
+		</operation>
+	</file>	
+        
+</modification>
