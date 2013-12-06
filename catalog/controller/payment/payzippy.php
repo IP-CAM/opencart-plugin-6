@@ -165,6 +165,7 @@ class ControllerPaymentPayzippy extends Controller {
 		     $hash_str .= $_POST['udf5'].'|';
 		     $hash_str .= 'REDIRECT|';
 		     $hash_str .= $this->config->get('payzippy_secret_key');
+		     $hash_str = html_entity_decode($hash_str); 
 		    $hash = hash( 'sha256', $hash_str);
 			$json['success'] = $hash;
 		} else {
