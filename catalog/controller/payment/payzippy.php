@@ -202,7 +202,9 @@ class ControllerPaymentPayzippy extends Controller {
 			$comment = 'PayZippy Transaction Id:  '.$this->request->get['payzippy_transaction_id'].'<br/>';
 			$comment .= 'Payment Method:  '.$this->request->get['payment_method'].'<br/>';
 			$comment .= 'Bank Name:  '.$this->request->get['bank_name'].'<br/>';
-			$comment .= 'Emi Month:  '.$this->request->get['emi_months'].'<br/>';
+			if (isset($this->request->get['emi_months'])) {
+				$comment .= 'Emi Month:  '.$this->request->get['emi_months'].'<br/>';	
+			}
 			$comment .= 'Transaction Status:  '.$this->request->get['transaction_status'].'<br/>';
 			$comment .= 'Transaction Response Code:  '.$this->request->get['transaction_response_code'].'<br/>';
 			$comment .= 'Transaction Response Message:  '.$this->request->get['transaction_response_message'].'<br/>';
