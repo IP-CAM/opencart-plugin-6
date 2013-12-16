@@ -40,6 +40,7 @@
           <tr>
             <td><?php echo $entry_payment_method; ?></td>
             <td>
+              <input type="checkbox" name="payzippy_payment_method[]" value="PAYZIPPY" id="credit" <?php if(in_array("PAYZIPPY", $payzippy_payment_method)){ ?>checked="checked"<?php } ?> /> <label for="credit">PayZippy</label>
               <input type="checkbox" name="payzippy_payment_method[]" value="CREDIT" id="credit" <?php if(in_array("CREDIT", $payzippy_payment_method)){ ?>checked="checked"<?php } ?> /> <label for="credit">Credit Card</label>
               <input type="checkbox" name="payzippy_payment_method[]" value="DEBIT" id="debit" <?php if(in_array("DEBIT", $payzippy_payment_method)){ ?>checked="checked"<?php } ?> /> <label for="debit">Debit Card</label>
               <input type="checkbox" name="payzippy_payment_method[]" value="EMI" id="emi" <?php if(in_array("EMI", $payzippy_payment_method)){ ?>checked="checked"<?php } ?> /> <label for="emi">Credit Card EMI</label>

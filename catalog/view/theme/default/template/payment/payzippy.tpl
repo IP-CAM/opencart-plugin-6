@@ -28,6 +28,7 @@
   <input type="hidden" name="merchant_key_id" value="<?php echo $merchant_key_id; ?>" />
   <input type="hidden" name="merchant_transaction_id" value="<?php echo $custom; ?>" />
   <p><?php echo $text_payment_method ?>:
+  <?php if(in_array("PAYZIPPY", $payment_method)){ ?><input type="radio" name="payment_method" value="PAYZIPPY" id="payzippy" /> <label for="payzippy">PayZippy</label><?php } ?>
   <?php if(in_array("CREDIT", $payment_method)){ ?><input type="radio" name="payment_method" value="CREDIT" id="credit" /> <label for="credit">Credit Card</label><?php } ?>
   <?php if(in_array("DEBIT", $payment_method)){ ?><input type="radio" name="payment_method" value="DEBIT" id="debit" /> <label for="debit">Debit Card</label><?php } ?>
   <?php if(in_array("EMI", $payment_method)){ ?><input type="radio" name="payment_method" value="EMI" id="emi" /> <label for="emi">Credit Card EMI</label><?php } ?>
@@ -124,6 +125,11 @@ $('#emi_name select').change(function(){
   }
 });
 
+$('#payzippy').live('click',function(){
+  $('#bank_name').css('display','none');
+  $('#emi_name').css('display','none');
+  $('#emi_months').css('display','none');
+});
 $('#credit').live('click',function(){
   $('#bank_name').css('display','none');
   $('#emi_name').css('display','none');
@@ -146,9 +152,14 @@ $('#emi').live('click',function(){
 });
 $('#button-confirm').bind('click', function() {
   $('.attention').remove();
-  if(!$('#credit').is(':checked')&&!$('#debit').is(':checked')&&!$('#net').is(':checked')&&!$('#emi').is(':checked')){
+  if(!$('#payzippy').is(':checked')&&!$('#credit').is(':checked')&&!$('#debit').is(':checked')&&!$('#net').is(':checked')&&!$('#emi').is(':checked')){
     $('#payment').before('<div class="attention"><?php echo $text_attention; ?></div>');
     return;
+  }
+  if($('#payzippy').is(':checked')){
+    $('#bank_name').remove();
+    $('#emi_name').remove();
+    $('#emi_months').remove();
   }
   if($('#credit').is(':checked')){
     $('#bank_name').remove();
