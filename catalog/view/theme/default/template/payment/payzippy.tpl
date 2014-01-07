@@ -1,6 +1,6 @@
 <h2><?php echo $text_title; ?></h2>
 <div class="content" id="payment">
-<form action="<?php echo $action; ?>" method="post">
+<form action="<?php echo $action; ?>" method="post" id="payzippy-form">
   <input type="hidden" name="billing_address" value="<?php echo $address; ?>" />
   <input type="hidden" name="billing_city" value="<?php echo $city; ?>" />
   <input type="hidden" name="billing_country" value="<?php echo $country; ?>" />
@@ -28,7 +28,7 @@
   <input type="hidden" name="merchant_key_id" value="<?php echo $merchant_key_id; ?>" />
   <input type="hidden" name="merchant_transaction_id" value="<?php echo $custom; ?>" />
   <p><?php echo $text_payment_method ?>:
-  <?php if(in_array("PAYZIPPY", $payment_method)){ ?><input type="radio" name="payment_method" value="PAYZIPPY" id="payzippy" /> <label for="payzippy">PayZippy</label><?php } ?>
+  <?php if(in_array("PAYZIPPY", $payment_method)){ ?><input type="radio" name="payment_method" value="PAYZIPPY" id="payzippy-method" /> <label for="payzippy-method">PayZippy</label><?php } ?>
   <?php if(in_array("CREDIT", $payment_method)){ ?><input type="radio" name="payment_method" value="CREDIT" id="credit" /> <label for="credit">Credit Card</label><?php } ?>
   <?php if(in_array("DEBIT", $payment_method)){ ?><input type="radio" name="payment_method" value="DEBIT" id="debit" /> <label for="debit">Debit Card</label><?php } ?>
   <?php if(in_array("EMI", $payment_method)){ ?><input type="radio" name="payment_method" value="EMI" id="emi" /> <label for="emi">Credit Card EMI</label><?php } ?>
@@ -64,6 +64,7 @@
   <input type="hidden" name="shipping_zip" value="<?php echo $x_ship_to_zip; ?>" />
   <input type="hidden" name="transaction_amount" value="<?php echo $total; ?>" />
   <input type="hidden" name="transaction_type" value="SALE" />
+  <input type="hidden" name="source" value="<?php echo $source; ?>" />
   <input type="hidden" name="udf1" value="<?php echo $udf1; ?>" />
   <input type="hidden" name="udf2" value="<?php echo $udf2; ?>" />
   <input type="hidden" name="udf3" value="<?php echo $udf3; ?>" />
@@ -80,7 +81,7 @@
   </div>
 </form>
 </div>
-<script type="text/javascript"><!--
+<script type="text/javascript">
 var emi_months = Array();
 <?php foreach($emi_name as $row){ $bank = explode('|', $row); ?>
   var months = Array();
@@ -125,7 +126,7 @@ $('#emi_name select').change(function(){
   }
 });
 
-$('#payzippy').live('click',function(){
+$('#payzippy-method').live('click',function(){
   $('#bank_name').css('display','none');
   $('#emi_name').css('display','none');
   $('#emi_months').css('display','none');
@@ -152,11 +153,11 @@ $('#emi').live('click',function(){
 });
 $('#button-confirm').bind('click', function() {
   $('.attention').remove();
-  if(!$('#payzippy').is(':checked')&&!$('#credit').is(':checked')&&!$('#debit').is(':checked')&&!$('#net').is(':checked')&&!$('#emi').is(':checked')){
+  if(!$('#payzippy-method').is(':checked')&&!$('#credit').is(':checked')&&!$('#debit').is(':checked')&&!$('#net').is(':checked')&&!$('#emi').is(':checked')){
     $('#payment').before('<div class="attention"><?php echo $text_attention; ?></div>');
     return;
   }
-  if($('#payzippy').is(':checked')){
+  if($('#payzippy-method').is(':checked')){
     $('#bank_name').remove();
     $('#emi_name').remove();
     $('#emi_months').remove();
@@ -181,7 +182,7 @@ $('#button-confirm').bind('click', function() {
   $.ajax({
     url: 'index.php?route=payment/payzippy/send',
     type: 'post',
-    data: $('#payment input[type=hidden], #payment input[type=radio]:checked, #payment select'),
+    data: $("#payzippy-form").serialize(),
     dataType: 'json',   
     beforeSend: function() {
       $('#button-confirm').attr('disabled', true);
@@ -203,4 +204,4 @@ $('#button-confirm').bind('click', function() {
     }
   });
 });
-//--></script>
+</script>

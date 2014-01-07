@@ -5,6 +5,7 @@ class ControllerPaymentPayzippy extends Controller {
 
 		$this->data['button_confirm'] = $this->language->get('button_confirm');
 		$this->data['text_title'] = $this->language->get('text_title');
+		$this->data['version'] = $this->language->get('version');
 		$this->data['text_wait'] = $this->language->get('text_wait');
 		$this->data['text_payment_method'] = $this->language->get('text_payment_method');
 		$this->data['text_bank_name'] = $this->language->get('text_bank_name');
@@ -105,6 +106,7 @@ class ControllerPaymentPayzippy extends Controller {
 			$this->data['customer_id'] = $this->customer->isLogged(); 
 			$_SESSION['time'] = time();
 			$this->data['custom'] = $this->session->data['order_id'].$_SESSION['time'];
+			$this->data['source'] = 'opencart-' . $this->data['version'];
 			
 			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/payzippy.tpl')) {
 				$this->template = $this->config->get('config_template') . '/template/payment/payzippy.tpl';
@@ -156,6 +158,7 @@ class ControllerPaymentPayzippy extends Controller {
 		     $hash_str .= $_POST['shipping_country'].'|';
 		     $hash_str .= $_POST['shipping_state'].'|';
 		     $hash_str .= $_POST['shipping_zip'].'|';
+		     $hash_str .= $_POST['source'].'|';
 		     $hash_str .= $transaction_amount.'|';
 		     $hash_str .= 'SALE|';
 		     $hash_str .= $_POST['udf1'].'|';

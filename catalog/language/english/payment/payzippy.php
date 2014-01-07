@@ -1,6 +1,7 @@
 <?php
 // Text
 $_['text_title']           = 'PayZippy';
+$_['version']           = '1.0.4';
 $_['text_wait']            = 'Please wait!';
 $_['text_payment_method']  = 'Payment Mode';
 $_['text_bank_name']  	= 'Bank Name';
