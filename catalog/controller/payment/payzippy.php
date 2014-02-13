@@ -7,9 +7,9 @@ class ControllerPaymentPayzippy extends Controller {
 		$this->data['text_title'] = $this->language->get('text_title');
 		$this->data['version'] = $this->language->get('version');
 		$this->data['text_wait'] = $this->language->get('text_wait');
-		$this->data['text_payment_method'] = $this->language->get('text_payment_method');
-		$this->data['text_bank_name'] = $this->language->get('text_bank_name');
-		$this->data['text_emi_name'] = $this->language->get('text_emi_name');
+		//$this->data['text_payment_method'] = $this->language->get('text_payment_method');
+		//$this->data['text_bank_name'] = $this->language->get('text_bank_name');
+		//$this->data['text_emi_name'] = $this->language->get('text_emi_name');
 		$this->data['text_attention'] = $this->language->get('text_attention');
 
 		$this->data['action'] = 'https://www.payzippy.com/payment/api/charging/v1';
@@ -89,14 +89,14 @@ class ControllerPaymentPayzippy extends Controller {
 			$this->data['callback_url'] = $this->url->link('payment/payzippy/callback', 'callback=1', 'SSL');
 			$this->data['merchant_id'] = $this->config->get('payzippy_login');
 			$this->data['merchant_key_id'] = $this->config->get('payzippy_key');
-			$this->data['payment_method'] = $this->is_serialized($this->config->get('payzippy_payment_method'))?unserialize($this->config->get('payzippy_payment_method')):array();
+			/*$this->data['payment_method'] = $this->is_serialized($this->config->get('payzippy_payment_method'))?unserialize($this->config->get('payzippy_payment_method')):array();
 			$this->data['bank_name'] = $this->is_serialized($this->config->get('payzippy_bank_name'))?unserialize($this->config->get('payzippy_bank_name')):array();
 			$this->data['emi_name'] = $this->is_serialized($this->config->get('payzippy_emi_name'))?unserialize($this->config->get('payzippy_emi_name')):array();
 			$this->data['emi_months_3'] = $this->is_serialized($this->config->get('payzippy_emi_months_3'))?unserialize($this->config->get('payzippy_emi_months_3')):array();
 			$this->data['emi_months_6'] = $this->is_serialized($this->config->get('payzippy_emi_months_6'))?unserialize($this->config->get('payzippy_emi_months_6')):array();
 			$this->data['emi_months_9'] = $this->is_serialized($this->config->get('payzippy_emi_months_9'))?unserialize($this->config->get('payzippy_emi_months_9')):array();
 			$this->data['emi_months_12'] = $this->is_serialized($this->config->get('payzippy_emi_months_12'))?unserialize($this->config->get('payzippy_emi_months_12')):array();
-			$this->data['secret_key'] = $this->config->get('payzippy_secret_key');
+			*/$this->data['secret_key'] = $this->config->get('payzippy_secret_key');
 			$this->data['udf1'] = $this->config->get('payzippy_udf1');
 			$this->data['udf2'] = $this->config->get('payzippy_udf2');
 			$this->data['udf3'] = $this->config->get('payzippy_udf3');
@@ -130,9 +130,9 @@ class ControllerPaymentPayzippy extends Controller {
 		
 		if (isset($_POST['hash'])) {
 			$hash_str = '';
-		   if(!empty($_POST['bank_name'])){ 
-		      $hash_str .= $_POST['bank_name'].'|';
-		   } 
+		   //if(!empty($_POST['bank_name'])){ 
+		   //   $hash_str .= $_POST['bank_name'].'|';
+		   //} 
 		     $hash_str .= $_POST['billing_address'].'|';
 		     $hash_str .= $_POST['billing_city'].'|';
 		     $hash_str .= $_POST['billing_country'].'|';
@@ -143,16 +143,16 @@ class ControllerPaymentPayzippy extends Controller {
 		     $hash_str .= $_POST['buyer_phone_no'].'|';
 		     $hash_str .= $_POST['callback_url'].'|';
 		     $hash_str .= $_POST['currency'].'|';
-		      if(!empty($_POST['emi_months'])){ 
-		      $hash_str .= $_POST['emi_months'].'|';
-		     }
+		      //if(!empty($_POST['emi_months'])){ 
+		      //$hash_str .= $_POST['emi_months'].'|';
+		     //}
 		     $hash_str .= 'SHA256|';
 		     $hash_str .= $_POST['item_total'].'|';
 		     $hash_str .= $_POST['item_vertical'].'|';
 		     $hash_str .= $_POST['merchant_id'].'|';
 		     $hash_str .= $_POST['merchant_key_id'].'|';
 		     $hash_str .= $_POST['merchant_transaction_id'].'|';
-		     $hash_str .= $_POST['payment_method'].'|';
+		     //$hash_str .= $_POST['payment_method'].'|';
 		     $hash_str .= $_POST['shipping_address'].'|';
 		     $hash_str .= $_POST['shipping_city'].'|';
 		     $hash_str .= $_POST['shipping_country'].'|';
@@ -203,11 +203,11 @@ class ControllerPaymentPayzippy extends Controller {
 
 		if ($order_info && $check_hash==$hash) {
 			$comment = 'PayZippy Transaction Id:  '.$this->request->get['payzippy_transaction_id'].'<br/>';
-			$comment .= 'Payment Method:  '.$this->request->get['payment_method'].'<br/>';
-			$comment .= 'Bank Name:  '.$this->request->get['bank_name'].'<br/>';
-			if (isset($this->request->get['emi_months'])) {
-				$comment .= 'Emi Month:  '.$this->request->get['emi_months'].'<br/>';	
-			}
+			//$comment .= 'Payment Method:  '.$this->request->get['payment_method'].'<br/>';
+			//$comment .= 'Bank Name:  '.$this->request->get['bank_name'].'<br/>';
+			//if (isset($this->request->get['emi_months'])) {
+			//	$comment .= 'Emi Month:  '.$this->request->get['emi_months'].'<br/>';	
+			//}
 			$comment .= 'Transaction Status:  '.$this->request->get['transaction_status'].'<br/>';
 			$comment .= 'Transaction Response Code:  '.$this->request->get['transaction_response_code'].'<br/>';
 			$comment .= 'Transaction Response Message:  '.$this->request->get['transaction_response_message'].'<br/>';
