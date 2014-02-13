@@ -10,14 +10,14 @@ class ControllerPaymentPayzippy extends Controller {
 		$this->load->model('setting/setting');
 			
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->request->post['payzippy_payment_method'] = isset($this->request->post['payzippy_payment_method'])?serialize($this->request->post['payzippy_payment_method']):serialize(array());
+			/* $this->request->post['payzippy_payment_method'] = isset($this->request->post['payzippy_payment_method'])?serialize($this->request->post['payzippy_payment_method']):serialize(array());
 			$this->request->post['payzippy_bank_name'] = isset($this->request->post['payzippy_bank_name'])?serialize($this->request->post['payzippy_bank_name']):serialize(array());
 			$this->request->post['payzippy_emi_name'] = isset($this->request->post['payzippy_emi_name'])?serialize($this->request->post['payzippy_emi_name']):serialize(array());
 			$this->request->post['payzippy_emi_months_3'] = isset($this->request->post['payzippy_emi_months_3'])?serialize($this->request->post['payzippy_emi_months_3']):serialize(array());
 			$this->request->post['payzippy_emi_months_6'] = isset($this->request->post['payzippy_emi_months_6'])?serialize($this->request->post['payzippy_emi_months_6']):serialize(array());
 			$this->request->post['payzippy_emi_months_9'] = isset($this->request->post['payzippy_emi_months_9'])?serialize($this->request->post['payzippy_emi_months_9']):serialize(array());
 			$this->request->post['payzippy_emi_months_12'] = isset($this->request->post['payzippy_emi_months_12'])?serialize($this->request->post['payzippy_emi_months_12']):serialize(array());
-			$this->model_setting_setting->editSetting('payzippy', $this->request->post);				
+			*/$this->model_setting_setting->editSetting('payzippy', $this->request->post);				
 			
 			$this->db->query("DELETE FROM " . DB_PREFIX . "url_alias WHERE query = 'callback=1' AND keyword = 'payment-callback'");
 			$this->db->query("INSERT INTO " . DB_PREFIX . "url_alias SET query = 'callback=1', keyword = 'payment-callback'");
@@ -39,14 +39,14 @@ class ControllerPaymentPayzippy extends Controller {
 		$this->data['entry_order_status'] = $this->language->get('entry_order_status');	
 		$this->data['entry_order_status_failed'] = $this->language->get('entry_order_status_failed');		
 		$this->data['entry_status'] = $this->language->get('entry_status');	
-		$this->data['entry_payment_method'] = $this->language->get('entry_payment_method');
+		/*$this->data['entry_payment_method'] = $this->language->get('entry_payment_method');
 		$this->data['entry_emi_months_3'] = $this->language->get('entry_emi_months_3');
 		$this->data['entry_emi_months_6'] = $this->language->get('entry_emi_months_6');
 		$this->data['entry_emi_months_9'] = $this->language->get('entry_emi_months_9');
 		$this->data['entry_emi_months_12'] = $this->language->get('entry_emi_months_12');
 		$this->data['entry_bank_name'] = $this->language->get('entry_bank_name');
 		$this->data['entry_emi_name'] = $this->language->get('entry_emi_name');
-		$this->data['entry_sort_order'] = $this->language->get('entry_sort_order');
+		*/$this->data['entry_sort_order'] = $this->language->get('entry_sort_order');
 		$this->data['entry_udf1'] = $this->language->get('entry_udf1');
 		$this->data['entry_udf2'] = $this->language->get('entry_udf2');
 		$this->data['entry_udf3'] = $this->language->get('entry_udf3');
@@ -122,7 +122,7 @@ class ControllerPaymentPayzippy extends Controller {
 			$this->data['payzippy_secret_key'] = $this->config->get('payzippy_secret_key');
 		}
 		
-		if (isset($this->request->post['payzippy_payment_method'])) {
+		/*if (isset($this->request->post['payzippy_payment_method'])) {
 			$this->data['payzippy_payment_method'] = $this->request->post['payzippy_payment_method'];
 		} else {
 			$payzippy_payment_method = $this->config->get('payzippy_payment_method');
@@ -171,7 +171,7 @@ class ControllerPaymentPayzippy extends Controller {
 			$this->data['payzippy_emi_months_12'] = $this->is_serialized($payzippy_emi_months_12)?unserialize($payzippy_emi_months_12):array();
 		} 
 
-		if (isset($this->request->post['payzippy_total'])) {
+		*/if (isset($this->request->post['payzippy_total'])) {
 			$this->data['payzippy_total'] = $this->request->post['payzippy_total'];
 		} else {
 			$this->data['payzippy_total'] = $this->config->get('payzippy_total'); 

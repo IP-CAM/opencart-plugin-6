@@ -27,36 +27,7 @@
   <input type="hidden" name="merchant_id" value="<?php echo $merchant_id; ?>" />
   <input type="hidden" name="merchant_key_id" value="<?php echo $merchant_key_id; ?>" />
   <input type="hidden" name="merchant_transaction_id" value="<?php echo $custom; ?>" />
-  <p><?php echo $text_payment_method ?>:
-  <?php if(in_array("PAYZIPPY", $payment_method)){ ?><input type="radio" name="payment_method" value="PAYZIPPY" id="payzippy-method" /> <label for="payzippy-method">PayZippy</label><?php } ?>
-  <?php if(in_array("CREDIT", $payment_method)){ ?><input type="radio" name="payment_method" value="CREDIT" id="credit" /> <label for="credit">Credit Card</label><?php } ?>
-  <?php if(in_array("DEBIT", $payment_method)){ ?><input type="radio" name="payment_method" value="DEBIT" id="debit" /> <label for="debit">Debit Card</label><?php } ?>
-  <?php if(in_array("EMI", $payment_method)){ ?><input type="radio" name="payment_method" value="EMI" id="emi" /> <label for="emi">Credit Card EMI</label><?php } ?>
-  <?php if(in_array("NET", $payment_method)){ ?><input type="radio" name="payment_method" value="NET" id="net" /> <label for="net">Net Banking</label><?php } ?></p>
-  <?php if(!empty($bank_name)){ ?>
-  <p id="bank_name" style="display:none;"><?php echo $text_bank_name ?>:
-    <select name="bank_name">
-      <?php foreach($bank_name as $row){ $bank = explode('|', $row); ?>
-      <option value="<?php echo $bank[0] ?>"><?php echo $bank[1] ?></option>
-      <?php } ?>
-    </select>
-  </p>
-  <?php } ?>
-  <?php if(!empty($emi_name)){ ?>
-  <p id="emi_name" style="display:none;"><?php echo $text_bank_name ?>:
-    <select name="bank_name">
-      <?php foreach($emi_name as $row){ $bank = explode('|', $row); ?>
-      <option value="<?php echo $bank[0] ?>"><?php echo $bank[1] ?></option>
-      <?php } ?>
-    </select>
-  </p>
-  <?php } ?>
-  <?php if(!empty($emi_name)){ ?>
-  <p id="emi_months" style="display:none;"><?php echo $text_emi_name ?>:
-    <select name="emi_months">
-    </select>
-  </p>
-  <?php } ?>
+  <!-- Removed php code that was sending bank name, emi... --> 
   <input type="hidden" name="shipping_address" value="<?php echo $x_ship_to_address; ?>" />
   <input type="hidden" name="shipping_city" value="<?php echo $x_ship_to_city; ?>" />
   <input type="hidden" name="shipping_country" value="<?php echo $x_ship_to_country; ?>" />
@@ -82,7 +53,7 @@
 </form>
 </div>
 <script type="text/javascript">
-var emi_months = Array();
+/*var emi_months = Array();
 <?php foreach($emi_name as $row){ $bank = explode('|', $row); ?>
   var months = Array();
   <?php if(in_array($row, $emi_months_3)){ ?>
@@ -151,9 +122,10 @@ $('#emi').live('click',function(){
   $('#emi_name').css('display','block');
   $('#emi_months').css('display','block');
 });
+*/
 $('#button-confirm').bind('click', function() {
   $('.attention').remove();
-  if(!$('#payzippy-method').is(':checked')&&!$('#credit').is(':checked')&&!$('#debit').is(':checked')&&!$('#net').is(':checked')&&!$('#emi').is(':checked')){
+ /* if(!$('#payzippy-method').is(':checked')&&!$('#credit').is(':checked')&&!$('#debit').is(':checked')&&!$('#net').is(':checked')&&!$('#emi').is(':checked')){
     $('#payment').before('<div class="attention"><?php echo $text_attention; ?></div>');
     return;
   }
@@ -179,6 +151,7 @@ $('#button-confirm').bind('click', function() {
   if($('#emi').is(':checked')){
     $('#bank_name').remove();
   }
+  */
   $.ajax({
     url: 'index.php?route=payment/payzippy/send',
     type: 'post',
