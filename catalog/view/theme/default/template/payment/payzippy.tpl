@@ -53,105 +53,10 @@
 </form>
 </div>
 <script type="text/javascript">
-/*var emi_months = Array();
-<?php foreach($emi_name as $row){ $bank = explode('|', $row); ?>
-  var months = Array();
-  <?php if(in_array($row, $emi_months_3)){ ?>
-    months.push(3);
-  <?php } ?>
-  <?php if(in_array($row, $emi_months_6)){ ?>
-    months.push(6);
-  <?php } ?>
-  <?php if(in_array($row, $emi_months_9)){ ?>
-    months.push(9);
-  <?php } ?>
-  <?php if(in_array($row, $emi_months_12)){ ?>
-    months.push(12);
-  <?php } ?>
-  months.push('<?php echo $bank[0] ?>');
-  emi_months.push(months);
-<?php } ?>
-var emi_name = $('#emi_name select').val();
-for(var i=0;i<emi_months.length;i++){
-  if(emi_months[i][emi_months[i].length-1]==emi_name){
-    var html = '';
-    for(var j=0;j<emi_months[i].length-1;j++){
-      html+= '<option value="'+emi_months[i][j]+'">'+emi_months[i][j]+' Months</option>';
-    }
-    $('#emi_months select').html(html);
-    break;
-  }
-}
 
-$('#emi_name select').change(function(){
-  var emi_name = $(this).val();
-  for(var i=0;i<emi_months.length;i++){
-    if(emi_months[i][emi_months[i].length-1]==emi_name){
-      var html = '';
-      for(var j=0;j<emi_months[i].length-1;j++){
-        html+= '<option value="'+emi_months[i][j]+'">'+emi_months[i][j]+' Months</option>';
-      }
-      $('#emi_months select').html(html);
-      break;
-    }
-  }
-});
-
-$('#payzippy-method').live('click',function(){
-  $('#bank_name').css('display','none');
-  $('#emi_name').css('display','none');
-  $('#emi_months').css('display','none');
-});
-$('#credit').live('click',function(){
-  $('#bank_name').css('display','none');
-  $('#emi_name').css('display','none');
-  $('#emi_months').css('display','none');
-});
-$('#debit').live('click',function(){
-  $('#bank_name').css('display','none');
-  $('#emi_name').css('display','none');
-  $('#emi_months').css('display','none');
-});
-$('#net').live('click',function(){
-  $('#bank_name').css('display','block');
-  $('#emi_name').css('display','none');
-  $('#emi_months').css('display','none');
-});
-$('#emi').live('click',function(){
-  $('#bank_name').css('display','none');
-  $('#emi_name').css('display','block');
-  $('#emi_months').css('display','block');
-});
-*/
 $('#button-confirm').bind('click', function() {
   $('.attention').remove();
- /* if(!$('#payzippy-method').is(':checked')&&!$('#credit').is(':checked')&&!$('#debit').is(':checked')&&!$('#net').is(':checked')&&!$('#emi').is(':checked')){
-    $('#payment').before('<div class="attention"><?php echo $text_attention; ?></div>');
-    return;
-  }
-  if($('#payzippy-method').is(':checked')){
-    $('#bank_name').remove();
-    $('#emi_name').remove();
-    $('#emi_months').remove();
-  }
-  if($('#credit').is(':checked')){
-    $('#bank_name').remove();
-    $('#emi_name').remove();
-    $('#emi_months').remove();
-  }
-  if($('#debit').is(':checked')){
-    $('#bank_name').remove();
-    $('#emi_name').remove();
-    $('#emi_months').remove();
-  }
-  if($('#net').is(':checked')){
-    $('#emi_name').remove();
-    $('#emi_months').remove();
-  }
-  if($('#emi').is(':checked')){
-    $('#bank_name').remove();
-  }
-  */
+ 
   $.ajax({
     url: 'index.php?route=payment/payzippy/send',
     type: 'post',
