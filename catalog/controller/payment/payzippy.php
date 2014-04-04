@@ -206,7 +206,7 @@ class ControllerPaymentPayzippy extends Controller {
 				} else {
 					$this->model_checkout_order->update($order_id, $order_status_id,$comment,true);
 				}
-				$this->redirect($this->url->link('checkout/success');
+				$this->redirect($this->url->link('checkout/success'));
 			}else{
 				$order_status_id = $this->config->get('payzippy_order_status_failed_id');
 				if (!$order_info['order_status_id']) {
