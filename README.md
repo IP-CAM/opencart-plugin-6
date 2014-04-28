@@ -10,3 +10,15 @@ PayZippy's advantages:
 Simple Transparent Pricing - No setup fee, no annual maintenance fee, no hidden charges. Pay less as you grow.
 
 If you have any queries or require more information about our service offering, feel free to reach out to us at [contactus@payzippy.com](contactus@payzippy.com) or visit our website at [http://www.payzippy.com.](http://www.payzippy.com.)
+
+* **INSTALLATION INSTRUCTIONS:
+
+1) Download PayZippy Plugin for Opencart either from github or from http://www.opencart.com/index.php?route=extension/extension/info&extension_id=13761.
+
+2) Recursively copy-paste folders-admin and catalog from the downloaded folder to opencart's folder.
+
+3) Goto Extensions->Payments in the back-end admin panel.
+
+4) There you can find opencart-plugin in admin back-end. There please enter Merchant Id, Merchant Key Id, Secret Key and other details and save it.
+
+5) That's it!!!
