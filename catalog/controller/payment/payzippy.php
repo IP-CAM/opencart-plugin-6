@@ -214,12 +214,12 @@ class ControllerPaymentPayzippy extends Controller {
 				} else {
 					$this->model_checkout_order->update($order_id, $order_status_id,$comment,true);
 				}
-				$this->redirect($this->url->link('payment/payzippy/error','msg='.$_GET['transaction_response_message']));
+				$this->redirect($this->url->link('payment/payzippy/error','msg='.$_REQUEST['transaction_response_message']));
 			}
 		} else if($check_hash!=$hash){
 			$this->redirect($this->url->link('checkout/checkout', '', 'SSL'));
 		} else{
-			$this->redirect($this->url->link('payment/payzippy/error','msg='.$_GET['transaction_response_message']));
+			$this->redirect($this->url->link('payment/payzippy/error','msg='.$_REQUEST['transaction_response_message']));
 		}
 	}
 
