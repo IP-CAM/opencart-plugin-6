@@ -164,8 +164,8 @@ class ControllerPaymentPayzippy extends Controller {
 	}
 
 	public function callback() {
-		if (isset($this->request->get['merchant_transaction_id'])) {
-			$order_id = str_replace($_SESSION['time'],'',$this->request->get['merchant_transaction_id']);
+		if (isset($_REQUEST['merchant_transaction_id'])) {
+			$order_id = str_replace($_SESSION['time'],'',$_REQUEST['merchant_transaction_id']);
 		} else {
 			$order_id = 0;
 		}		
@@ -174,10 +174,10 @@ class ControllerPaymentPayzippy extends Controller {
 				
 		$order_info = $this->model_checkout_order->getOrder($order_id);
 
-		$hash = $this->request->get['hash'];
+		$hash = $_REQUEST['hash'];
 		$hash_str = '';
-		ksort($this->request->get);
-		foreach($this->request->get as $key=>$value){
+		ksort($_REQUEST);
+		foreach($_REQUEST as $key=>$value){
 			if($key!='route' && $key!='_route_' && $key!='hash' && $key!='callback') {
 				if($value!='null') $hash_str .= $value.'|';
 				else $hash_str .= '|';
@@ -187,19 +187,19 @@ class ControllerPaymentPayzippy extends Controller {
 		$check_hash =  hash( 'sha256',$hash_str);
 
 		if ($order_info && $check_hash==$hash) {
-			$comment = 'PayZippy Transaction Id:  '.$this->request->get['payzippy_transaction_id'].'<br/>';
-			$comment .= 'Payment Method:  '.$this->request->get['payment_method'].'<br/>';
+			$comment = 'PayZippy Transaction Id:  '.$_REQUEST['payzippy_transaction_id'].'<br/>';
+			$comment .= 'Payment Method:  '.$_REQUEST['payment_method'].'<br/>';
 
-			$comment .= 'Payment Instrument:  '.$this->request->get['payment_instrument'].'<br/>';
-			$comment .= 'Transaction Status:  '.$this->request->get['transaction_status'].'<br/>';
-			$comment .= 'Transaction Response Code:  '.$this->request->get['transaction_response_code'].'<br/>';
-			$comment .= 'Transaction Response Message:  '.$this->request->get['transaction_response_message'].'<br/>';
-			$comment .= 'Is International:  '.$this->request->get['is_international'].'<br/>';
+			$comment .= 'Payment Instrument:  '.$_REQUEST['payment_instrument'].'<br/>';
+			$comment .= 'Transaction Status:  '.$_REQUEST['transaction_status'].'<br/>';
+			$comment .= 'Transaction Response Code:  '.$_REQUEST['transaction_response_code'].'<br/>';
+			$comment .= 'Transaction Response Message:  '.$_REQUEST['transaction_response_message'].'<br/>';
+			$comment .= 'Is International:  '.$_REQUEST['is_international'].'<br/>';
 			
-			$comment .= 'Fraud Action:  '.$this->request->get['fraud_action'].'<br/>';
-			$comment .= 'Fraud Details:  '.$this->request->get['fraud_details'].'<br/>';
+			$comment .= 'Fraud Action:  '.$_REQUEST['fraud_action'].'<br/>';
+			$comment .= 'Fraud Details:  '.$_REQUEST['fraud_details'].'<br/>';
 
-			if($this->request->get['transaction_status']=='SUCCESS'){
+			if($_REQUEST['transaction_status']=='SUCCESS'){
 				$order_status_id = $this->config->get('payzippy_order_status_id');
 				if (!$order_info['order_status_id']) {
 					$this->model_checkout_order->confirm($order_id, $order_status_id,$comment,true);
