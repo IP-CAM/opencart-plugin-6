@@ -164,8 +164,9 @@ class ControllerPaymentPayzippy extends Controller {
 	}
 
 	public function callback() {
-		if (isset($_REQUEST['merchant_transaction_id'])) {
-			$order_id = str_replace($_SESSION['time'],'',$_REQUEST['merchant_transaction_id']);
+		$request_params = array_merge($_GET, $_POST);
+		if (isset($request_params['merchant_transaction_id'])) {
+			$order_id = str_replace($_SESSION['time'],'',$request_params['merchant_transaction_id']);
 		} else {
 			$order_id = 0;
 		}		
@@ -174,10 +175,10 @@ class ControllerPaymentPayzippy extends Controller {
 				
 		$order_info = $this->model_checkout_order->getOrder($order_id);
 
-		$hash = $_REQUEST['hash'];
+		$hash = $request_params['hash'];
 		$hash_str = '';
-		ksort($_REQUEST);
-		foreach($_REQUEST as $key=>$value){
+		ksort($request_params);
+		foreach($request_params as $key=>$value){
 			if($key!='route' && $key!='_route_' && $key!='hash' && $key!='callback') {
 				if($value!='null') $hash_str .= $value.'|';
 				else $hash_str .= '|';
@@ -187,19 +188,19 @@ class ControllerPaymentPayzippy extends Controller {
 		$check_hash =  hash( 'sha256',$hash_str);
 
 		if ($order_info && $check_hash==$hash) {
-			$comment = 'PayZippy Transaction Id:  '.$_REQUEST['payzippy_transaction_id'].'<br/>';
-			$comment .= 'Payment Method:  '.$_REQUEST['payment_method'].'<br/>';
+			$comment = 'PayZippy Transaction Id:  '.$request_params['payzippy_transaction_id'].'<br/>';
+			$comment .= 'Payment Method:  '.$request_params['payment_method'].'<br/>';
 
-			$comment .= 'Payment Instrument:  '.$_REQUEST['payment_instrument'].'<br/>';
-			$comment .= 'Transaction Status:  '.$_REQUEST['transaction_status'].'<br/>';
-			$comment .= 'Transaction Response Code:  '.$_REQUEST['transaction_response_code'].'<br/>';
-			$comment .= 'Transaction Response Message:  '.$_REQUEST['transaction_response_message'].'<br/>';
-			$comment .= 'Is International:  '.$_REQUEST['is_international'].'<br/>';
+			$comment .= 'Payment Instrument:  '.$request_params['payment_instrument'].'<br/>';
+			$comment .= 'Transaction Status:  '.$request_params['transaction_status'].'<br/>';
+			$comment .= 'Transaction Response Code:  '.$request_params['transaction_response_code'].'<br/>';
+			$comment .= 'Transaction Response Message:  '.$request_params['transaction_response_message'].'<br/>';
+			$comment .= 'Is International:  '.$request_params['is_international'].'<br/>';
 			
-			$comment .= 'Fraud Action:  '.$_REQUEST['fraud_action'].'<br/>';
-			$comment .= 'Fraud Details:  '.$_REQUEST['fraud_details'].'<br/>';
+			$comment .= 'Fraud Action:  '.$request_params['fraud_action'].'<br/>';
+			$comment .= 'Fraud Details:  '.$request_params['fraud_details'].'<br/>';
 
-			if($_REQUEST['transaction_status']=='SUCCESS'){
+			if($request_params['transaction_status']=='SUCCESS'){
 				$order_status_id = $this->config->get('payzippy_order_status_id');
 				if (!$order_info['order_status_id']) {
 					$this->model_checkout_order->confirm($order_id, $order_status_id,$comment,true);
@@ -214,12 +215,12 @@ class ControllerPaymentPayzippy extends Controller {
 				} else {
 					$this->model_checkout_order->update($order_id, $order_status_id,$comment,true);
 				}
-				$this->redirect($this->url->link('payment/payzippy/error','msg='.$_REQUEST['transaction_response_message']));
+				$this->redirect($this->url->link('payment/payzippy/error','msg='.$request_params['transaction_response_message']));
 			}
 		} else if($check_hash!=$hash){
 			$this->redirect($this->url->link('checkout/checkout', '', 'SSL'));
 		} else{
-			$this->redirect($this->url->link('payment/payzippy/error','msg='.$_REQUEST['transaction_response_message']));
+			$this->redirect($this->url->link('payment/payzippy/error','msg='.$request_params['transaction_response_message']));
 		}
 	}
 
