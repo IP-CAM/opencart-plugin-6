@@ -38,6 +38,34 @@
               <?php } ?></td>
           </tr>
           <tr>
+            <td><span class="required">*</span> <?php echo $ui_mode; ?></td>
+            <td>
+              <!--<input type="text" name="payzippy_ui_mode" value="<?php echo $payzippy_ui_mode; ?>" />-->
+              <select name="payzippy_ui_mode">
+              <option value="REDIRECT"
+              <?php
+              if($payzippy_ui_mode == "REDIRECT"){
+              ?>
+              selected
+              <?php
+              }
+              ?>
+              >REDIRECT</option>
+              <option value="IFRAME"
+              <?php
+              if($payzippy_ui_mode == "IFRAME"){
+              ?>
+              selected
+              <?php
+              }
+              ?>
+              >IFRAME</option>
+              </select>
+              <?php if ($error_ui_mode) { ?>
+              <span class="error"><?php echo $error_ui_mode; ?></span>
+              <?php } ?></td>
+          </tr>
+          <tr>
             <td><?php echo $entry_udf1; ?></td>
             <td><input type="text" name="payzippy_udf1" value="<?php echo $payzippy_udf1; ?>" /></td>
           </tr>

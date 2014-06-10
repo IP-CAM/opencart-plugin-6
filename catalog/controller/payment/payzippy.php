@@ -87,6 +87,7 @@ class ControllerPaymentPayzippy extends Controller {
 			$this->data['merchant_id'] = $this->config->get('payzippy_login');
 			$this->data['merchant_key_id'] = $this->config->get('payzippy_key');
 			$this->data['secret_key'] = $this->config->get('payzippy_secret_key');
+			$this->data['ui_mode'] = $this->config->get('payzippy_ui_mode');
 			$this->data['udf1'] = $this->config->get('payzippy_udf1');
 			$this->data['udf2'] = $this->config->get('payzippy_udf2');
 			$this->data['udf3'] = $this->config->get('payzippy_udf3');
@@ -151,7 +152,7 @@ class ControllerPaymentPayzippy extends Controller {
 		     $hash_str .= $_POST['udf3'].'|';
 		     $hash_str .= $_POST['udf4'].'|';
 		     $hash_str .= $_POST['udf5'].'|';
-		     $hash_str .= 'REDIRECT|';
+		     $hash_str .= $this->config->get('payzippy_ui_mode').'|';
 		     $hash_str .= $this->config->get('payzippy_secret_key');
 		     $hash_str = html_entity_decode($hash_str); 
 		    $hash = hash( 'sha256', $hash_str);

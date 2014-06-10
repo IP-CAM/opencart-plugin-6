@@ -28,6 +28,7 @@ class ControllerPaymentPayzippy extends Controller {
 		$this->data['entry_login'] = $this->language->get('entry_login');
 		$this->data['entry_key'] = $this->language->get('entry_key');
 		$this->data['entry_secret_key'] = $this->language->get('entry_secret_key');
+		$this->data['ui_mode'] = $this->language->get('ui_mode');
 		$this->data['entry_total'] = $this->language->get('entry_total');	
 		$this->data['entry_order_status'] = $this->language->get('entry_order_status');	
 		$this->data['entry_order_status_failed'] = $this->language->get('entry_order_status_failed');		
@@ -64,6 +65,12 @@ class ControllerPaymentPayzippy extends Controller {
 			$this->data['error_secret_key'] = $this->error['secret_key'];
 		} else {
 			$this->data['error_secret_key'] = '';
+		}
+
+		if (isset($this->error['ui_mode'])) {
+			$this->data['error_ui_mode'] = $this->error['error_ui_mode'];
+		} else {
+			$this->data['error_ui_mode'] = '';
 		}
 		
   		$this->data['breadcrumbs'] = array();
@@ -106,6 +113,12 @@ class ControllerPaymentPayzippy extends Controller {
 			$this->data['payzippy_secret_key'] = $this->request->post['payzippy_secret_key'];
 		} else {
 			$this->data['payzippy_secret_key'] = $this->config->get('payzippy_secret_key');
+		}
+		
+		if (isset($this->request->post['payzippy_ui_mode'])) {
+			$this->data['payzippy_ui_mode'] = $this->request->post['payzippy_ui_mode'];
+		} else {
+			$this->data['payzippy_ui_mode'] = $this->config->get('payzippy_ui_mode');
 		}
 		
 		if (isset($this->request->post['payzippy_total'])) {

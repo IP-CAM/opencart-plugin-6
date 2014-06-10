@@ -11,6 +11,7 @@ $_['text_success']       = 'Success: You have modified PayZippy account details!
 // Entry
 $_['entry_login']        = 'Merchant ID:';
 $_['entry_key']          = 'Merchant Key ID:';
+$_['ui_mode']			 = 'UI Mode:';
 $_['entry_secret_key']   = 'Secret Key:';
 $_['entry_total']        = 'Total:<br /><span class="help">The checkout total the order must reach before this payment method becomes active.</span>';
 $_['entry_order_status'] = 'Order Status:'; 
@@ -34,4 +35,5 @@ $_['error_permission']   = 'Warning: You do not have permission to modify paymen
 $_['error_login']        = 'Merchant ID Required!';
 $_['error_key']          = 'Merchant Key ID Required!';
 $_['error_secret_key']   = 'Secret Key Required!';
+$_['error_ui_mode']   = 'UI Mode Required!';
 ?>
